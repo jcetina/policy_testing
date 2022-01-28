@@ -273,3 +273,55 @@ POLICY_RULE
 }
 PARAMETERS
 }
+
+resource "azurerm_policy_assignment" "activitylogstostorage" {
+  name                 = "activity-logs-to-storage"
+  location             = data.azurerm_resource_group.rg.location
+  scope                = data.azurerm_resource_group.rg.id
+  policy_definition_id = azurerm_policy_definition.activitylogstostorage.id
+  description          = "Policy Assignment for Activity Logs -> Storage Account"
+  display_name         = "Activity Logs -> Storage across tenant"
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+
+  parameters = <<PARAMETERS
+  {
+    "effect": {
+      "value": "DeployIfNotExists"
+    },
+    "profileName": {
+      "value": "setbypolicy_Diagnostics2Storage"
+    },
+    "storageAccountId": {
+      "value": "/subscriptions/ad3b85d9-1354-4383-a30c-6383716082e4/resourceGroups/rg-gh-jcetina-policy-testing/providers/Microsoft.Storage/storageAccounts/jcetinapoltestast"
+    },
+    "storageAccountId2": {
+      "value": "/subscriptions/ad3b85d9-1354-4383-a30c-6383716082e4/resourceGroups/rg-gh-jcetina-policy-testing/providers/Microsoft.Storage/storageAccounts/jcetinapoltestbst"
+    }
+  }
+PARAMETERS
+}
+
+resource "azurerm_policy_remediation" "remediateactivitylogs" {
+  name                    = "remediate-activity-logs"
+  scope                   = azurerm_policy_assignment.activitylogstostorage.scope
+  policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
+  resource_discovery_mode = "ExistingNonCompliant"
+}
+
+resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContributor" {
+  principal_id         = azurerm_policy_assignment.activitylogstostorage.identity.0.principal_id
+  role_definition_name = "Storage Account Contributor"
+  scope                = data.azurerm_resource_group.rg.id
+  description          = "terraform-managed: security_telemetry_remediation role Storage Account Contributor"
+}
+
+resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContributor" {
+  principal_id         = azurerm_policy_assignment.activitylogstostorage.identity.0.principal_id
+  role_definition_name = "Monitoring Contributor"
+  scope                = data.azurerm_resource_group.rg.id
+  description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
+}
