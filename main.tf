@@ -38,6 +38,7 @@ locals {
     }
   }
 }
+
 data "azurerm_resource_group" "rg" {
   name = "rg-gh-jcetina-policy-testing"
 }
@@ -53,4 +54,222 @@ resource "azurerm_storage_account" "storage_accounts" {
   account_replication_type  = each.value.account_replication_type
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
+}
+
+resource "azurerm_policy_definition" "activitylogstostorage" {
+  name                  = "activity-logs-to-storage"
+  policy_type           = "Custom"
+  mode                  = "All"
+  display_name          = "Activity Logs -> Storage"
+  management_group_name = "53a3b2a4-fb4f-4bea-8637-b567de9faebc"
+
+  policy_rule = <<POLICY_RULE
+{
+  "if": {
+    "allOf":
+    [
+      {
+        "field": "type",
+        "equals": "Microsoft.Resources/resourceGroups"
+      },
+      {
+          "field": "name",
+          "equals": "rg-gh-jcetina-policy-testing"
+      }
+    ]
+  },
+  "then": {
+    "effect": "[parameters('effect')]",
+    "details": {
+      "type": "microsoft.insights/diagnosticSettings",
+      "existenceCondition": {
+        "allOf": [
+          {
+            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+            "equals": "[parameters('storageAccountId')]"
+          },
+          {
+            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+            "equals": "[parameters('storageAccountId2')]"
+          }
+        ]
+      },
+      "roleDefinitionIds": [
+        "/providers/Microsoft.Authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa"
+      ],
+      "deployment": {
+        "properties": {
+          "mode": "incremental",
+          "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+              "profileName": {
+                "type": "string"
+              },
+              "storageAccountId": {
+                "type": "string"
+              },
+              "storageAccountId2": {
+                "type": "string"
+              }
+            },
+            "variables": {},
+            "resources": [
+              {
+                "type": "microsoft.insights/diagnosticSettings",
+                "apiVersion": "2017-05-01-preview",
+                "name": "[parameters('profileName')]",
+                "properties": {
+                  "name": "[concat('a-', parameters('profileName'))]",
+                  "logs": [
+                    {
+                      "category": "Administrative",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Security",
+                      "enabled": true
+                    },
+                    {
+                      "category": "ServiceHealth",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Alert",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Recommendation",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Policy",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Autoscale",
+                      "enabled": true
+                    },
+                    {
+                      "category": "ResourceHealth",
+                      "enabled": true
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "microsoft.insights/diagnosticSettings",
+                "apiVersion": "2017-05-01-preview",
+                "name": "[concat('b-', parameters('profileName'))]",
+                "properties": {
+                  "storageAccountId": "[parameters('storageAccountId2')]",
+                  "logs": [
+                    {
+                      "category": "Administrative",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Security",
+                      "enabled": true
+                    },
+                    {
+                      "category": "ServiceHealth",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Alert",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Recommendation",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Policy",
+                      "enabled": true
+                    },
+                    {
+                      "category": "Autoscale",
+                      "enabled": true
+                    },
+                    {
+                      "category": "ResourceHealth",
+                      "enabled": true
+                    }
+                  ]
+                }
+              }
+            ],
+            "outputs": {}
+          },
+          "parameters": {
+            "storageAccountId": {
+              "value": "[parameters('storageAccountId')]"
+            },
+            "storageAccountId2": {
+              "value": "[parameters('storageAccountId')]"
+            },
+            "profileName": {
+              "value": "[parameters('profileName')]"
+            }
+          }
+        },
+        "location": "eastus"
+      },
+      "deploymentScope": "subscription"
+    }
+  }
+}
+POLICY_RULE
+
+  parameters = <<PARAMETERS
+{
+  "effect": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Effect",
+      "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+      "DeployIfNotExists",
+      "AuditIfNotExists",
+      "Disabled"
+    ],
+    "defaultValue": "DeployIfNotExists"
+  },
+  "profileName": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Profile name",
+      "description": "The diagnostic settings profile name"
+    },
+    "defaultValue": "setbypolicy_Diagnostics2Storage"
+  },
+  "storageAccountId": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Storage Account resource ID",
+      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
+      "strongType": "Microsoft.Storage/storageAccounts"
+    }
+  },
+  "storageAccountId": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Storage Account resource ID",
+      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
+      "strongType": "Microsoft.Storage/storageAccounts"
+    }
+  },
+  "storageAccountId2": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Storage Account resource ID",
+      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
+      "strongType": "Microsoft.Storage/storageAccounts"
+    }
+  }
+}
+PARAMETERS
 }
