@@ -95,7 +95,8 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
         ]
       },
       "roleDefinitionIds": [
-        "/providers/Microsoft.Authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa"
+        "/providers/Microsoft.Authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa",
+        "/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab"
       ],
       "deployment": {
         "properties": {
@@ -305,12 +306,14 @@ resource "azurerm_policy_assignment" "activitylogstostorage" {
 PARAMETERS
 }
 
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
 
 resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContributor" {
   principal_id         = azurerm_policy_assignment.activitylogstostorage.identity.0.principal_id
