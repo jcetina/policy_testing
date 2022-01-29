@@ -57,6 +57,7 @@ resource "azurerm_storage_account" "storage_accounts" {
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
 }
+/*
 
 resource "azurerm_policy_definition" "activitylogstostorage" {
   name         = "activity-logs-to-storage"
@@ -250,7 +251,7 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContribut
 resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContributor" {
   principal_id         = azurerm_policy_assignment.activitylogstostorage.identity.0.principal_id
   role_definition_name = "Monitoring Contributor"
-  scope                = data.azurerm_resource_group.rg.id
+  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
@@ -260,3 +261,4 @@ resource "azurerm_policy_remediation" "remediateactivitylogs" {
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
