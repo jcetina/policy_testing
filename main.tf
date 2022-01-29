@@ -88,10 +88,6 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
           {
             "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
             "equals": "[parameters('storageAccountId')]"
-          },
-          {
-            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
-            "equals": "[parameters('storageAccountId2')]"
           }
         ]
       },
@@ -123,49 +119,7 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
                 "apiVersion": "2017-05-01-preview",
                 "name": "[parameters('profileName')]",
                 "properties": {
-                  "name": "[concat('a-', parameters('profileName'))]",
-                  "logs": [
-                    {
-                      "category": "Administrative",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Security",
-                      "enabled": true
-                    },
-                    {
-                      "category": "ServiceHealth",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Alert",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Recommendation",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Policy",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Autoscale",
-                      "enabled": true
-                    },
-                    {
-                      "category": "ResourceHealth",
-                      "enabled": true
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "microsoft.insights/diagnosticSettings",
-                "apiVersion": "2017-05-01-preview",
-                "name": "[concat('b-', parameters('profileName'))]",
-                "properties": {
-                  "storageAccountId": "[parameters('storageAccountId2')]",
+                  "name": "[parameters('profileName')]",
                   "logs": [
                     {
                       "category": "Administrative",
@@ -207,9 +161,6 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
           },
           "parameters": {
             "storageAccountId": {
-              "value": "[parameters('storageAccountId')]"
-            },
-            "storageAccountId2": {
               "value": "[parameters('storageAccountId')]"
             },
             "profileName": {
@@ -263,14 +214,6 @@ POLICY_RULE
       "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
       "strongType": "Microsoft.Storage/storageAccounts"
     }
-  },
-  "storageAccountId2": {
-    "type": "String",
-    "metadata": {
-      "displayName": "Storage Account resource ID",
-      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
-      "strongType": "Microsoft.Storage/storageAccounts"
-    }
   }
 }
 PARAMETERS
@@ -299,9 +242,6 @@ resource "azurerm_policy_assignment" "activitylogstostorage" {
     },
     "storageAccountId": {
       "value": "/subscriptions/ad3b85d9-1354-4383-a30c-6383716082e4/resourceGroups/rg-gh-jcetina-policy-testing/providers/Microsoft.Storage/storageAccounts/jcetinapoltestast"
-    },
-    "storageAccountId2": {
-      "value": "/subscriptions/ad3b85d9-1354-4383-a30c-6383716082e4/resourceGroups/rg-gh-jcetina-policy-testing/providers/Microsoft.Storage/storageAccounts/jcetinapoltestbst"
     }
   }
 PARAMETERS
