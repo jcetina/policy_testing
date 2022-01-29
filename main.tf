@@ -43,6 +43,8 @@ data "azurerm_resource_group" "rg" {
   name = "rg-gh-jcetina-policy-testing"
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_storage_account" "storage_accounts" {
   for_each = local.storage_accounts
 
@@ -61,22 +63,12 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
   policy_type           = "Custom"
   mode                  = "All"
   display_name          = "Activity Logs -> Storage"
-  management_group_name = "53a3b2a4-fb4f-4bea-8637-b567de9faebc"
 
   policy_rule = <<POLICY_RULE
 {
   "if": {
-    "allOf":
-    [
-      {
-        "field": "type",
-        "equals": "Microsoft.Resources/resourceGroups"
-      },
-      {
-          "field": "name",
-          "equals": "rg-gh-jcetina-policy-testing"
-      }
-    ]
+    "field": "type",
+    "equals": "Microsoft.Resources/subscriptions"
   },
   "then": {
     "effect": "[parameters('effect')]",
