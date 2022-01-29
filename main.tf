@@ -70,15 +70,14 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
   policy_rule = <<POLICY_RULE
 {
   "if": {
-    "allOf":
-    [
+    "allOf": [
       {
         "field": "type",
         "equals": "Microsoft.Resources/resourceGroups"
       },
       {
-          "field": "name",
-          "equals": "rg-gh-jcetina-policy-testing"
+        "field": "name",
+        "equals": "rg-gh-jcetina-policy-testing"
       }
     ]
   },
@@ -119,7 +118,7 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
                 "apiVersion": "2017-05-01-preview",
                 "name": "[parameters('profileName')]",
                 "properties": {
-                  "name": "[parameters('profileName')]",
+                  "storageAccountId": "[parameters('storageAccountId')]",
                   "logs": [
                     {
                       "category": "Administrative",
@@ -214,7 +213,7 @@ PARAMETERS
 resource "azurerm_policy_assignment" "activitylogstostorage" {
   name                 = "activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
-  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
+  scope                = data.azurerm_resource_group.rg.id
   policy_definition_id = azurerm_policy_definition.activitylogstostorage.id
   description          = "Policy Assignment for Activity Logs -> Storage Account"
   display_name         = "Activity Logs -> Storage across tenant"
@@ -254,10 +253,11 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   scope                = data.azurerm_resource_group.rg.id
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
-
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
