@@ -59,10 +59,10 @@ resource "azurerm_storage_account" "storage_accounts" {
 }
 
 resource "azurerm_policy_definition" "activitylogstostorage" {
-  name                  = "activity-logs-to-storage"
-  policy_type           = "Custom"
-  mode                  = "All"
-  display_name          = "Activity Logs -> Storage"
+  name         = "activity-logs-to-storage"
+  policy_type  = "Custom"
+  mode         = "All"
+  display_name = "Activity Logs -> Storage"
 
   policy_rule = <<POLICY_RULE
 {
