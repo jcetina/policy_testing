@@ -206,14 +206,6 @@ POLICY_RULE
       "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
       "strongType": "Microsoft.Storage/storageAccounts"
     }
-  },
-  "storageAccountId": {
-    "type": "String",
-    "metadata": {
-      "displayName": "Storage Account resource ID",
-      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
-      "strongType": "Microsoft.Storage/storageAccounts"
-    }
   }
 }
 PARAMETERS
