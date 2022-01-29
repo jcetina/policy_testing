@@ -67,8 +67,17 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
   policy_rule = <<POLICY_RULE
 {
   "if": {
-    "field": "type",
-    "equals": "Microsoft.Resources/subscriptions"
+    "allOf":
+    [
+      {
+        "field": "type",
+        "equals": "Microsoft.Resources/resourceGroups"
+      },
+      {
+          "field": "name",
+          "equals": "rg-gh-jcetina-policy-testing"
+      }
+    ]
   },
   "then": {
     "effect": "[parameters('effect')]",
@@ -270,7 +279,7 @@ PARAMETERS
 resource "azurerm_policy_assignment" "activitylogstostorage" {
   name                 = "activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
-  scope                = data.azurerm_resource_group.rg.id
+  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
   policy_definition_id = azurerm_policy_definition.activitylogstostorage.id
   description          = "Policy Assignment for Activity Logs -> Storage Account"
   display_name         = "Activity Logs -> Storage across tenant"
