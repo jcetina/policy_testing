@@ -206,7 +206,7 @@ PARAMETERS
 resource "azurerm_policy_assignment" "activitylogstostorage" {
   name                 = "activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
-  scope                = data.azurerm_resource_group.rg.id
+  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
   policy_definition_id = azurerm_policy_definition.activitylogstostorage.id
   description          = "Policy Assignment for Activity Logs -> Storage Account"
   display_name         = "Activity Logs -> Storage across tenant"
@@ -247,10 +247,11 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
-
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
