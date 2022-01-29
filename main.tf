@@ -57,7 +57,7 @@ resource "azurerm_storage_account" "storage_accounts" {
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
 }
-/*
+
 
 resource "azurerm_policy_definition" "activitylogstostorage" {
   name         = "activity-logs-to-storage"
@@ -261,4 +261,3 @@ resource "azurerm_policy_remediation" "remediateactivitylogs" {
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
-*/
