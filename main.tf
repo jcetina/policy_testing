@@ -57,12 +57,15 @@ resource "azurerm_storage_account" "storage_accounts" {
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
 }
-/*
+
 resource "azurerm_policy_definition" "activitylogstostorage" {
   name         = "activity-logs-to-storage"
   policy_type  = "Custom"
   mode         = "All"
   display_name = "Activity Logs -> Storage"
+  depends_on = [
+    azurerm_storage_account.storage_accounts
+  ]
 
   policy_rule = <<POLICY_RULE
 {
@@ -106,9 +109,6 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
                 "type": "string"
               },
               "storageAccountId": {
-                "type": "string"
-              },
-              "storageAccountId2": {
                 "type": "string"
               }
             },
@@ -254,7 +254,9 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   scope                = data.azurerm_resource_group.rg.id
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
-*/
+
+
+
 /*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
