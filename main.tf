@@ -71,16 +71,8 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
   policy_rule = <<POLICY_RULE
 {
   "if": {
-    "allOf": [
-      {
-        "field": "type",
-        "equals": "Microsoft.Resources/resourceGroups"
-      },
-      {
-        "field": "name",
-        "equals": "rg-gh-jcetina-policy-testing"
-      }
-    ]
+    "field": "type",
+    "equals": "Microsoft.Resources/subscriptions"
   },
   "then": {
     "effect": "[parameters('effect')]",
@@ -255,9 +247,11 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
