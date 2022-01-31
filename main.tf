@@ -82,10 +82,6 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
           {
             "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
             "equals": "[parameters('storageAccountId')]"
-          },
-          {
-            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
-            "equals": "[parameters('storageAccountId2')]"
           }
         ]
       },
@@ -310,10 +306,11 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
-
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
