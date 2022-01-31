@@ -259,6 +259,7 @@ POLICY_RULE
 PARAMETERS
 }
 
+/*
 resource "azurerm_policy_assignment" "activitylogstostorage" {
   name                 = "activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
@@ -313,3 +314,4 @@ resource "azurerm_policy_remediation" "remediateactivitylogs" {
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
