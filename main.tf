@@ -58,7 +58,7 @@ resource "azurerm_storage_account" "storage_accounts" {
   min_tls_version           = "TLS1_2"
 }
 
-/*
+
 resource "azurerm_policy_definition" "activitylogstostorage" {
   name         = "activity-logs-to-storage"
   policy_type  = "Custom"
@@ -81,18 +81,8 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
       "existenceCondition": {
         "allOf": [
           {
-            "anyOf": [
-              {
-              "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
-              "equals": "[parameters('storageAccountId')]"
-              }
-            ],
-            "anyOf": [
-              {
-              "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
-              "equals": "fasdfsadfasfasf"
-              }
-            ]
+            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+            "equals": "[parameters('storageAccountId2')]"
           }
         ]
       },
@@ -119,48 +109,6 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
             },
             "variables": {},
             "resources": [
-              {
-                "type": "microsoft.insights/diagnosticSettings",
-                "apiVersion": "2017-05-01-preview",
-                "name": "[parameters('profileName')]",
-                "properties": {
-                  "storageAccountId": "[parameters('storageAccountId')]",
-                  "logs": [
-                    {
-                      "category": "Administrative",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Security",
-                      "enabled": true
-                    },
-                    {
-                      "category": "ServiceHealth",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Alert",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Recommendation",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Policy",
-                      "enabled": true
-                    },
-                    {
-                      "category": "Autoscale",
-                      "enabled": true
-                    },
-                    {
-                      "category": "ResourceHealth",
-                      "enabled": true
-                    }
-                  ]
-                }
-              },
               {
                 "type": "microsoft.insights/diagnosticSettings",
                 "apiVersion": "2017-05-01-preview",
@@ -317,7 +265,7 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
-
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
