@@ -58,7 +58,7 @@ resource "azurerm_storage_account" "storage_accounts" {
   min_tls_version           = "TLS1_2"
 }
 
-
+/*
 resource "azurerm_policy_definition" "activitylogstostorage" {
   name         = "activity-logs-to-storage"
   policy_type  = "Custom"
@@ -80,6 +80,10 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
       "type": "microsoft.insights/diagnosticSettings",
       "existenceCondition": {
         "allOf": [
+          {
+            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+            "equals": "[parameters('storageAccountId')]"
+          },
           {
             "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
             "equals": "[parameters('storageAccountId2')]"
@@ -265,7 +269,7 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
-/*
+
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
