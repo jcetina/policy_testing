@@ -95,7 +95,7 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
       ],
       "deployment": {
         "properties": {
-          "mode": "incremental",
+          "mode": "complete",
           "template": {
             "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
@@ -268,9 +268,11 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
   description          = "terraform-managed: security_telemetry_remediation role Monitoring Contributor"
 }
 
+/*
 resource "azurerm_policy_remediation" "remediateactivitylogs" {
   name                    = "remediate-activity-logs"
   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
