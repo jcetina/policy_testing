@@ -7,7 +7,7 @@ resource "azurerm_eventhub_namespace" "evhns" {
 }
 
 resource "azurerm_eventhub" "eventhub" {
-  name                = "evh-${policy-test}"
+  name                = "evh-policy-test"
   namespace_name      = azurerm_eventhub_namespace.evhns.name
   resource_group_name = data.azurerm_resource_group.rg.name
 }
