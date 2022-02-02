@@ -95,7 +95,7 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
       ],
       "deployment": {
         "properties": {
-          "mode": "complete",
+          "mode": "incremental",
           "template": {
             "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
