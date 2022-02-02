@@ -11,4 +11,5 @@ resource "azurerm_eventhub" "eventhub" {
   namespace_name      = azurerm_eventhub_namespace.evhns.name
   resource_group_name = data.azurerm_resource_group.rg.name
   message_retention   = 1
+  partition_count     = 1
 }
