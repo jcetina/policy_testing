@@ -27,7 +27,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
       "operations": [
         {
           "operation": "remove",
-          "field": "[concat('Microsoft.Insights/diagnosticSettings/', parameters('profileName'))]"
+          "field": "Microsoft.Insights/diagnosticSettings"
         }
       ]
     }
