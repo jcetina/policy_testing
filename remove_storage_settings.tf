@@ -13,7 +13,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
         "equals": "Microsoft.Resources/subscriptions"
       },
       {
-        "field": "Microsoft.Insights/diagnosticSettings/name",
+        "field": "Microsoft.Insights/diagnosticSettings.name",
         "equals": "[parameters('profileName')]"
       }
     ]
