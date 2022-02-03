@@ -6,7 +6,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
 
   policy_rule = <<POLICY_RULE
 {
-  "if":
+  "if": {
     "allOf": [
       {
         "field": "type",
@@ -28,7 +28,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
       "operations": [
         {
           "operation": "remove",
-          "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'), '2')]",
+          "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'), '2')]"
         }
       ]
     }
