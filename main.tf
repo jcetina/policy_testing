@@ -217,7 +217,7 @@ POLICY_RULE
 PARAMETERS
 }
 
-/*
+
 resource "azurerm_policy_assignment" "activitylogstostorage" {
   name                 = "activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
