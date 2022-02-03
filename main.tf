@@ -82,8 +82,8 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
       "existenceCondition": {
         "allOf": [
           {
-            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId2",
-            "equals": "[parameters('storageAccountId')]"
+            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+            "equals": "[parameters('storageAccountId2')]"
           }
         ]
       },
