@@ -1,3 +1,4 @@
+/*
 resource "azurerm_eventhub_namespace" "evhns" {
   name                = "evhns-jcetina-policy-test"
   location            = data.azurerm_resource_group.rg.location
@@ -13,3 +14,4 @@ resource "azurerm_eventhub" "eventhub" {
   message_retention   = 1
   partition_count     = 1
 }
+*/
