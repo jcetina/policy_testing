@@ -3,9 +3,6 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
   policy_type  = "Custom"
   mode         = "All"
   display_name = "Modify Activity Log Settings"
-  depends_on = [
-    azurerm_storage_account.storage_accounts
-  ]
 
   policy_rule = <<POLICY_RULE
 {
@@ -16,7 +13,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
         "equals": "Microsoft.Resources/subscriptions"
       },
       {
-        "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'), '2')]"
+        "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'), '2')]",
         "exists": "True"
       }
     ]
