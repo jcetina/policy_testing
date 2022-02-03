@@ -45,7 +45,7 @@ data "azurerm_resource_group" "rg" {
 
 data "azurerm_client_config" "current" {}
 
-/*
+
 resource "azurerm_storage_account" "storage_accounts" {
   for_each = local.storage_accounts
 
@@ -72,7 +72,7 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
 {
   "if": {
     "field": "type",
-    "equals": "Microsoft.Resources/subscriptions"
+    "equals": "Microsoft.Resources/resourceGroups"
   },
   "then": {
     "effect": "[parameters('effect')]",
@@ -83,10 +83,6 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
           {
             "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
             "equals": "[parameters('storageAccountId')]"
-          },
-          {
-            "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
-            "equals": "[parameters('storageAccountId2')]"
           }
         ]
       },
@@ -221,7 +217,7 @@ POLICY_RULE
 PARAMETERS
 }
 
-
+/*
 resource "azurerm_policy_assignment" "activitylogstostorage" {
   name                 = "activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
