@@ -1,3 +1,4 @@
+/*
 resource "azurerm_policy_definition" "modify-activity-log-settings" {
   name         = "modify-activity-logs"
   policy_type  = "Custom"
@@ -91,3 +92,4 @@ resource "azurerm_role_assignment" "modify-activity-log-settings-role-assignment
   scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
   description          = "modify-activity-log-settings"
 }
+*/
