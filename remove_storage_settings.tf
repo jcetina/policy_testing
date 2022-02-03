@@ -11,16 +11,21 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
       {
         "field": "type",
         "equals": "Microsoft.Resources/subscriptions"
-      },
-      {
-        "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'), '2')]",
-        "exists": "True"
       }
     ]
   },
   "then": {
     "effect": "[parameters('effect')]",
     "details": {
+      "type": "microsoft.insights/diagnosticSettings",
+      "existenceCondition": {
+        "allOf": [
+          {
+            "field": "name",
+            "equals": "[parameters('profileName')]"
+          }
+        ]
+      },
       "roleDefinitionIds": [
         "/providers/Microsoft.Authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa",
         "/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab"
@@ -28,7 +33,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
       "operations": [
         {
           "operation": "remove",
-          "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'), '2')]"
+          "field": "[concat('Microsoft.Resources/subscriptions/microsoft.insights/diagnosticSettings', parameters('profileName'))]"
         }
       ]
     }
