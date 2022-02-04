@@ -59,6 +59,7 @@ resource "azurerm_storage_account" "storage_accounts" {
   min_tls_version           = "TLS1_2"
 }
 
+/*
 resource "azurerm_policy_definition" "activitylogstostorage" {
   name         = "activity-logs-to-storage"
   policy_type  = "Custom"
@@ -72,7 +73,7 @@ resource "azurerm_policy_definition" "activitylogstostorage" {
 {
   "if": {
     "field": "type",
-    "equals": "Microsoft.Resources/resourceGroups"
+    "equals": "Microsoft.Resources/subscriptions"
   },
   "then": {
     "effect": "[parameters('effect')]",
@@ -273,3 +274,4 @@ resource "azurerm_policy_remediation" "remediateactivitylogs" {
   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
   resource_discovery_mode = "ExistingNonCompliant"
 }
+*/
