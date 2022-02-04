@@ -26,7 +26,7 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
       ],
       "operations": [
         {
-          "field": "Microsoft.Insights/diagnosticSettings/name",
+          "field": "name",
           "operation": "addOrReplace",
           "value": "disabled"
         },
