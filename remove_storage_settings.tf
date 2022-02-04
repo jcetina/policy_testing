@@ -1,3 +1,4 @@
+/*
 resource "azurerm_policy_definition" "modify-activity-log-settings" {
   name         = "modify-activity-logs"
   policy_type  = "Custom"
@@ -26,8 +27,14 @@ resource "azurerm_policy_definition" "modify-activity-log-settings" {
       ],
       "operations": [
         {
-          "field": "Microsoft.Insights/diagnosticSettings",
-          "operation": "remove"
+          "field": "Microsoft.Insights/diagnosticSettings.name",
+          "operation": "addOrReplace",
+          "value": "disabled"
+        },
+        {
+          "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+          "operation": "addOrReplace",
+          "value": "False"
         }
       ]
     }
@@ -59,7 +66,7 @@ POLICY_RULE
 }
 PARAMETERS
 }
-/*
+
 resource "azurerm_policy_assignment" "modify-activity-log-settings" {
   name                 = "modify-activity-logs"
   location             = data.azurerm_resource_group.rg.location
