@@ -1,4 +1,3 @@
-/*
 resource "azurerm_policy_definition" "modify-activity-log-settings" {
   name         = "modify-activity-logs"
   policy_type  = "Custom"
@@ -91,7 +90,7 @@ resource "azurerm_policy_assignment" "modify-activity-log-settings" {
   }
 PARAMETERS
 }
-
+/*
 resource "azurerm_role_assignment" "modify-activity-log-settings-role-assignment" {
   principal_id         = azurerm_policy_assignment.modify-activity-log-settings.identity.0.principal_id
   role_definition_name = "Monitoring Contributor"
