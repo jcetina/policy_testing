@@ -48,14 +48,6 @@ POLICY_RULE
       "Disabled"
     ],
     "defaultValue": "Audit"
-  },
-  "profileName": {
-    "type": "String",
-    "metadata": {
-      "displayName": "Profile name",
-      "description": "The diagnostic settings profile name"
-    },
-    "defaultValue": "setbypolicy_Diagnostics2Storage"
   }
 }
 PARAMETERS
@@ -79,9 +71,6 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   {
     "effect": {
       "value": "Audit"
-    },
-    "profileName": {
-      "value": "setbypolicy_Diagnostics2Storage"
     }
   }
 PARAMETERS
