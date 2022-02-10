@@ -267,10 +267,10 @@ resource "azurerm_role_assignment" "SecurityTelemetryRemediationMonitorContribut
 }
 
 
-resource "azurerm_policy_remediation" "remediateactivitylogs" {
-  name                    = "remediate-activity-logs"
-  scope                   = azurerm_policy_assignment.activitylogstostorage.scope
-  policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
-  resource_discovery_mode = "ExistingNonCompliant"
-}
+# resource "azurerm_policy_remediation" "remediateactivitylogs" {
+#   name                    = "remediate-activity-logs"
+#   scope                   = azurerm_policy_assignment.activitylogstostorage.scope
+#   policy_assignment_id    = azurerm_policy_assignment.activitylogstostorage.id
+#   resource_discovery_mode = "ExistingNonCompliant"
+# }
 
