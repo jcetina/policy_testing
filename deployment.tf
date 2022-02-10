@@ -42,7 +42,6 @@ POLICY_RULE
 PARAMETERS
 }
 
-/*
 resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   name                 = "fix-activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
@@ -64,7 +63,6 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   }
 PARAMETERS
 }
-*/
 
 
 # resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContributor" {
