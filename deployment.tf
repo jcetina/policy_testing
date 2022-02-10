@@ -26,7 +26,7 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
               "containsKey": "profileName"
             },
             {
-              "field": "Microsoft.Resources/deployments/parameters[profileName]",
+              "field": "Microsoft.Resources/deployments/parameters/profileName",
               "equals": "[parameters('profileName')]"
             }
           ]
