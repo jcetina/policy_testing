@@ -1,5 +1,3 @@
-
-/*
 resource "azurerm_policy_definition" "fix_activity_logs" {
   name         = "fix-activity-logs"
   policy_type  = "Custom"
@@ -17,9 +15,8 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
     ]
   },
   "then": {
-    "effect": "[parameters('effect')]"
-  },
-  "details": {
+    "effect": "[parameters('effect')]",
+    "details": {
       "type": "Microsoft.Resources/deployments",
       "existenceCondition": {
         "not": {
@@ -30,12 +27,13 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
             },
             {
               "field": "Microsoft.Resources/deployments/parameters.profileName",
-              "equals": "setbypolicy_Diagnostics2Storage"
+              "equals": "[parameters('profileName')]"
             }
           ]
         }
       }
     }
+  },
 }
 POLICY_RULE
 
@@ -92,7 +90,6 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   }
 PARAMETERS
 }
-*/
 
 # resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContributor" {
 #   principal_id         = azurerm_policy_assignment.activitylogstostorage.identity.0.principal_id
