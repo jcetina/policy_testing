@@ -1,5 +1,5 @@
 
-
+/*
 resource "azurerm_policy_definition" "fix_activity_logs" {
   name         = "fix-activity-logs"
   policy_type  = "Custom"
@@ -12,13 +12,30 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
     "allOf": [
         {
             "field": "type",
-            "equals": "Microsoft.Resources/deployments"
+            "equals": "Microsoft.Resources/subscriptions"
         }
     ]
   },
   "then": {
     "effect": "[parameters('effect')]"
-  }
+  },
+  "details": {
+      "type": "Microsoft.Resources/deployments",
+      "existenceCondition": {
+        "not": {
+          "allOf": [
+            {
+              "field": "Microsoft.Resources/deployments/parameters",
+              "containsKey": "profileName"
+            },
+            {
+              "field": "Microsoft.Resources/deployments/parameters.profileName",
+              "equals": "setbypolicy_Diagnostics2Storage"
+            }
+          ]
+        }
+      }
+    }
 }
 POLICY_RULE
 
@@ -37,10 +54,19 @@ POLICY_RULE
       "Disabled"
     ],
     "defaultValue": "Audit"
+  },
+  "profileName": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Profile name",
+      "description": "The diagnostic settings profile name"
+    },
+    "defaultValue": "setbypolicy_Diagnostics2Storage"
   }
 }
 PARAMETERS
 }
+
 
 resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   name                 = "fix-activity-logs-to-storage"
@@ -59,11 +85,14 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   {
     "effect": {
       "value": "Audit"
+    },
+    "profileName": {
+      "value": "setbypolicy_Diagnostics2Storage"
     }
   }
 PARAMETERS
 }
-
+*/
 
 # resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContributor" {
 #   principal_id         = azurerm_policy_assignment.activitylogstostorage.identity.0.principal_id
