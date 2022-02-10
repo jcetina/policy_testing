@@ -33,7 +33,7 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
         }
       }
     }
-  },
+  }
 }
 POLICY_RULE
 
