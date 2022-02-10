@@ -24,6 +24,10 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
             {
               "field": "Microsoft.Resources/deployments/parameters",
               "containsKey": "profileName"
+            },
+            {
+              "field": "Microsoft.Resources/deployments/parameters[profileName]",
+              "equals": "[parameters('profileName')]"
             }
           ]
         }
@@ -48,6 +52,14 @@ POLICY_RULE
       "Disabled"
     ],
     "defaultValue": "Audit"
+  },
+  "profileName": {
+    "type": "String",
+    "metadata": {
+      "displayName": "Profile name",
+      "description": "The diagnostic settings profile name"
+    },
+    "defaultValue": "setbypolicy_Diagnostics2Storage"
   }
 }
 PARAMETERS
@@ -71,6 +83,9 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   {
     "effect": {
       "value": "Audit"
+    },
+    "profileName": {
+      "value": "setbypolicy_Diagnostics2Storage"
     }
   }
 PARAMETERS
