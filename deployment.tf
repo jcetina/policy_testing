@@ -23,7 +23,11 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
           "allOf": [
             {
               "field": "Microsoft.Resources/deployments/parameters",
-              "equals": "warglebargle"
+              "containsKey": "profileName"
+            },
+            {
+              "field": "Microsoft.Resources/deployments/parameters",
+              "equals": "[parameters('profileName')]"
             }
           ]
         }
