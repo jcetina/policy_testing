@@ -227,7 +227,7 @@ POLICY_RULE
     "type": "String",
     "metadata": {
       "displayName": "Deployment Name",
-      "description": "Name for the subdeployment the remediation will make.",
+      "description": "Name for the subdeployment the remediation will make."
     }
   }
 }
