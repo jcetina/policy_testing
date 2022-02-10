@@ -45,30 +45,6 @@ POLICY_RULE
       "Disabled"
     ],
     "defaultValue": "Audit"
-  },
-  "profileName": {
-    "type": "String",
-    "metadata": {
-      "displayName": "Profile name",
-      "description": "The diagnostic settings profile name"
-    },
-    "defaultValue": "setbypolicy_Diagnostics2Storage"
-  },
-  "storageAccountId": {
-    "type": "String",
-    "metadata": {
-      "displayName": "Storage Account resource ID",
-      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
-      "strongType": "Microsoft.Storage/storageAccounts"
-    }
-  },
-  "storageAccountId2": {
-    "type": "String",
-    "metadata": {
-      "displayName": "Storage Account resource ID",
-      "description": "Select Storage account from dropdown list. If this account is outside of the scope of the assignment you must manually grant 'Contributor' permissions (or similar) to the policy assignment's principal ID.",
-      "strongType": "Microsoft.Storage/storageAccounts"
-    }
   }
 }
 PARAMETERS
@@ -92,15 +68,6 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   {
     "effect": {
       "value": "Audit"
-    },
-    "profileName": {
-      "value": "setbypolicy_Diagnostics2Storage"
-    },
-    "storageAccountId": {
-      "value": "/subscriptions/ad3b85d9-1354-4383-a30c-6383716082e4/resourceGroups/rg-gh-jcetina-policy-testing/providers/Microsoft.Storage/storageAccounts/jcetinapoltestast"
-    },
-    "storageAccountId2": {
-      "value": "/subscriptions/ad3b85d9-1354-4383-a30c-6383716082e4/resourceGroups/rg-gh-jcetina-policy-testing/providers/Microsoft.Storage/storageAccounts/jcetinapoltestbst"
     }
   }
 PARAMETERS
