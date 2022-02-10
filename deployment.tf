@@ -11,14 +11,6 @@ resource "azurerm_policy_definition" "fix_activity_logs" {
   "if": {
     "allOf": [
         {
-            "field": "Microsoft.Resources/deployments/parameters",
-            "containsKey": "storageAccountId"
-        },
-        {
-            "field": "Microsoft.Resources/deployments/parameters",
-            "containsKey": "storageAccountId2"
-        },
-        {
             "field": "type",
             "equals": "Microsoft.Resources/deployments"
         }
@@ -50,7 +42,7 @@ POLICY_RULE
 PARAMETERS
 }
 
-
+/*
 resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   name                 = "fix-activity-logs-to-storage"
   location             = data.azurerm_resource_group.rg.location
@@ -72,7 +64,7 @@ resource "azurerm_policy_assignment" "fixactivitylogstostorage" {
   }
 PARAMETERS
 }
-
+*/
 
 
 # resource "azurerm_role_assignment" "SecurityTelemetryRemediationStorageContributor" {
